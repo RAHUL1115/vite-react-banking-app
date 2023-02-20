@@ -2,14 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./main.css";
-import Root from "./pages/Root";
+import Login from './pages/Login';
 import NotFound from "./pages/404";
-
+import UserDashboard from "./pages/User/UserDashboard"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Login />,
+  },
+  {
+    path: "/admin-dashboard",
+    element: <UserDashboard />,
+  },
+  {
+    path: "/user-dashboard",
+    element: <UserDashboard />,
   },
   {
     path: "*",
@@ -18,7 +26,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );
