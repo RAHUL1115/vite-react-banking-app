@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
+
 
 function Login() {
+  const cookies = new Cookies();
   const navigate = useNavigate();
   const [username, setUsername] = useState("shailesh@admin.com");
   const [password, setPassword] = useState("admin");
 
   async function handleLogin(e) {
     e.preventDefault();
-    console.log("wokring");
+    // console.log("wokring");
 
     if (username === "" || password === "") {
       return;
@@ -21,17 +24,20 @@ function Login() {
       .post(url, {
         username: username,
         password: password,
+      },{
+        withCredentials: true,
       })
       .then((res) => {
-        console.log("wokring");
-
         let roleName = res.data.roleName.toLowerCase();
         let userName = res.data.username;
+        
+        // let authorization =  res.data.authorization;
+        // cookies.set('authorization', authorization, { path: '/' });
 
         if (roleName === "admin") {
-          navigate(`/admin-dashboard`);
+          navigate(`/admin/users`);
         } else {
-          navigate(`/user-dashboard`);
+          navigate(`/user`);
         }
       })
       .catch(() => {

@@ -5,6 +5,9 @@ import "./main.css";
 import Login from './pages/Login';
 import NotFound from "./pages/404";
 import UserDashboard from "./pages/User/UserDashboard"
+import AdminUsersDashboard from "./pages/Admin/AdminUsersDashboard";
+import AdminBanksDashboard from "./pages/Admin/AdminBanksDashboard";
+import UserAccountPage from "./pages/User/UserAccountPage";
 
 const router = createBrowserRouter([
   {
@@ -12,12 +15,20 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/admin-dashboard",
+    path: "/admin/users",
+    element: <AdminUsersDashboard />,
+  },
+  {
+    path: "/admin/banks",
+    element: <AdminBanksDashboard />,
+  },
+  {
+    path: "/user",
     element: <UserDashboard />,
   },
   {
-    path: "/user-dashboard",
-    element: <UserDashboard />,
+    path: "/user/account/:account",
+    element: <UserAccountPage />,
   },
   {
     path: "*",
