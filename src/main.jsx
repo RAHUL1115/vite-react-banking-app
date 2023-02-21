@@ -19,6 +19,10 @@ const router = createBrowserRouter([
     element: <AdminUsersDashboard />,
   },
   {
+    path: "/admin/users/userId",
+    element: <UserDashboard />,
+  },
+  {
     path: "/admin/banks",
     element: <AdminBanksDashboard />,
   },
@@ -27,7 +31,7 @@ const router = createBrowserRouter([
     element: <UserDashboard />,
   },
   {
-    path: "/user/account/:account",
+    path: "/user/account/:accountId",
     element: <UserAccountPage />,
   },
   {
