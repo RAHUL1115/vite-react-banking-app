@@ -8,23 +8,22 @@ import UserCard from "../../components/admin/UserCard";
 function AdminUsersDashboard() {
   const [customers, setCusomers] = useState(null);
   const [totalRecords, setTotalRecords] = useState(5);
-  const [limit, setLimit] = useState(8);
-  const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const limit = 8;
 
   useEffect(() => {
     getCustomers();
-  }, [limit, offset]);
+  }, []);
 
   useEffect(() => {
     if (customers) {
       setCusomers(null);
-      setOffset(currentPage * limit - limit);
+      getCustomers();
     }
   }, [currentPage]);
 
   function getCustomers() {
-    let url = `http://localhost:5000/api/v1/bank-app/customers?offset=${offset}&limit=${limit}`;
+    let url = `http://localhost:5000/api/v1/bank-app/customers?limit=${limit}&offset=${currentPage-1}`;
     axios
       .get(url)
       .then((res) => {

@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Layout1 from "../../layout/Layout1";
 import Loader from "../../components/Loader";
-import UserDetails from "../../components/user/UserDetails";
-import UserAccount from "../../components/user/UserAccount";
+import UserDetailsCard from "../../components/user/UserDetailsCard";
+import UserAccountCard from "../../components/user/UserAccountCard";
 import { useParams } from "react-router-dom";
 
 function UserDashboard() {
@@ -34,7 +34,7 @@ function UserDashboard() {
         <h2 className="uppercase font-bold text-2xl text-center">User info</h2>
         <div className="space-y-5">
           {customer ? (
-            <UserDetails
+            <UserDetailsCard
               firstName={customer.firstName}
               lastName={customer.lastName}
               email={customer.email}
@@ -54,7 +54,7 @@ function UserDashboard() {
         <div className="space-y-5">
           {customer ? (
             customer.accounts.map((account) => (
-              <UserAccount
+              <UserAccountCard
                 key={account.id}
                 id={account.id}
                 accountName={account.accountName}

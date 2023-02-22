@@ -19,7 +19,6 @@ function Pagination({ total, limit, currentPage, setCurrentPage}) {
 
   function updatePage(page) {
     if(pages && pages.includes(page)){
-        console.log(page);
         setCurrentPage(page);
     }
   }

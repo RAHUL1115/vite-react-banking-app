@@ -8,9 +8,12 @@ function Navbar() {
   const userName = cookies.get('userName')
   const role = cookies.get('role')
 
-  useState(()=>{
-    console.log(userName);
-  },[])
+  function logout(){
+    cookies.remove('authorization');
+    cookies.remove('userName');
+    cookies.remove('role');
+    navigate('/');
+  }
 
   if (role=="admin") {
     return (
@@ -58,9 +61,7 @@ function Navbar() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    navigate("/");
-                  }}
+                  onClick={logout}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                 >
                   Logout
@@ -78,7 +79,7 @@ function Navbar() {
           <Link to="/" className="flex items-center">
             <img src={Logo} className="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
             <span className="self-center text-xl font-semibold whitespace-nowrap">
-              Dummy App
+              {userName}
             </span>
           </Link>
           <button
@@ -112,9 +113,7 @@ function Navbar() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    navigate("/");
-                  }}
+                  onClick={logout}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                 >
                   Logout

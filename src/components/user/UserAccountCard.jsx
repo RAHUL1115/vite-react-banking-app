@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons8-user-100.png";
 
-function UserAccount({ accountName, bankID, customerID, balance, id }) {
+function UserAccountCard({ accountName, bankID, customerID, balance, id }) {
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
      
@@ -27,4 +27,4 @@ function UserAccount({ accountName, bankID, customerID, balance, id }) {
   );
 }
 
-export default UserAccount;
+export default UserAccountCard;
