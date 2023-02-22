@@ -27,9 +27,11 @@ function Login() {
         withCredentials: true,
       })
       .then((res) => {
+        let id = res.data.id;
         let roleName = res.data.roleName.toLowerCase();
         let userName = res.data.username;
         
+        cookies.set('id', id, { path: '/' });
         cookies.set('role', roleName, { path: '/' });
         cookies.set('userName', userName, { path: '/' });
 

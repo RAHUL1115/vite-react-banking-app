@@ -9,6 +9,7 @@ function AdminUsersDashboard() {
   const [customers, setCusomers] = useState(null);
   const [totalRecords, setTotalRecords] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+  const [temp, setTemp] = useState(true);
   const limit = 8;
 
   useEffect(() => {
@@ -48,10 +49,13 @@ function AdminUsersDashboard() {
               {customers.map((customer) => (
                 <UserCard
                   key={customer.id}
+                  id={customer.id}
                   firstName={customer.firstName}
                   lastName={customer.lastName}
                   email={customer.email}
                   balance={customer.balance}
+                  isActive={customer.credential.isActive}
+                  reRender={()=>{setTemp(!temp)}}
                 >
                   Hello
                 </UserCard>

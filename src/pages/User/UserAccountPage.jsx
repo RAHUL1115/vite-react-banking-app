@@ -6,8 +6,11 @@ import Layout1 from "../../layout/Layout1";
 import TransectionTable from "../../components/TransectionTable";
 import Pagination from "../../components/Pagination";
 import AccountInfoCard from "../../components/user/AccountInfoCard";
+import TransectionCard from "../../components/user/TransectionCard";
+import cookies from "../../utils/cookies";
 
 function UserAccountPage() {
+  const isAdmin = cookies.get("role") == "admin";
   const accountId = useParams()["accountId"];
 
   const [accountDetails, setaccountDetails] = useState(null);
@@ -16,6 +19,7 @@ function UserAccountPage() {
   const [totalTransections, setTotalTransections] = useState(0);
   const [transectionPage, setTransectionPage] = useState(1);
   const transectionPageLimit = 5;
+  const [temp, setTemp] = useState(true);
 
   useEffect(() => {
     getAccountDetails();
@@ -27,7 +31,7 @@ function UserAccountPage() {
       setTransections(null);
       getAccountTransection();
     }
-  }, [transectionPage]);
+  }, [transectionPage, temp]);
 
   function getAccountDetails() {
     let url = `http://localhost:5000/api/v1/bank-app/accounts?accountID=${accountId}`;
@@ -56,6 +60,10 @@ function UserAccountPage() {
       });
   }
 
+  function reRender() {
+    setTemp(!temp);
+  }
+
   return (
     <Layout1>
       <hr />
@@ -81,8 +89,17 @@ function UserAccountPage() {
           Transactions
         </h2>
         <div className="space-y-5">
-          {transections ? (
-            <TransectionTable data={transections}></TransectionTable>
+          {transections && accountDetails ? (
+            <>
+              {isAdmin || (
+                <TransectionCard
+                  accountId={accountDetails.id}
+                  bankId={accountDetails.bankID}
+                  reRender={reRender}
+                ></TransectionCard>
+              )}
+              {/* <TransectionTable data={transections}></TransectionTable> */}
+            </>
           ) : (
             <div className="flex justify-center items-center">
               <Loader></Loader>

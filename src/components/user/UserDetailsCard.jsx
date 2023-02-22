@@ -14,14 +14,14 @@ function UserDetails({ firstName, lastName, email, balance }) {
           {firstName} {lastName}
         </h5>
         <span className="text-sm text-gray-500 ">{email}</span>
-        <div className="flex items-center mt-4 space-x-3 md:mt-6">
+        {/* <div className="flex items-center mt-4 space-x-3 md:mt-6">
           <a
             href="#"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300   "
           >
             Edit
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

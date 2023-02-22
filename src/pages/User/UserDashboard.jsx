@@ -4,10 +4,13 @@ import Layout1 from "../../layout/Layout1";
 import Loader from "../../components/Loader";
 import UserDetailsCard from "../../components/user/UserDetailsCard";
 import UserAccountCard from "../../components/user/UserAccountCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import cookies from '../../utils/cookies'
 
 function UserDashboard() {
-  let accountId = useParams()['userId'] || "e45b93a3-39a5-4492-91d5-1513cce6d09e"
+  let isAdmin = cookies.get('role') == "admin"
+  let navigate = useNavigate()
+  let accountId = isAdmin ? useParams()['userId'] : cookies.get('id');
   const [customer, setCusomers] = useState(null);
 
 
@@ -20,7 +23,12 @@ function UserDashboard() {
     axios
       .get(url)
       .then((res) => {
-        setCusomers(res.data[0]);
+        if(res.data.length == 0){
+          alert('No data found');
+          isAdmin && navigate(-1)
+        }else{
+          setCusomers(res.data[0]);
+        }
       })
       .catch((err) => {
         console.error(err);

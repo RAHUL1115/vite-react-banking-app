@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <AdminUsersDashboard />,
   },
   {
-    path: "/admin/users/userId",
+    path: "/admin/user/:userId",
     element: <UserDashboard />,
   },
   {
