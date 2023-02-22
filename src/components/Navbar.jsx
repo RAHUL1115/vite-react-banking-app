@@ -1,18 +1,25 @@
-import { Navigation } from "@mui/icons-material";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
+import cookies from '../utils/cookies'
 
 function Navbar() {
   const navigate = useNavigate();
+  const userName = cookies.get('userName')
+  const role = cookies.get('role')
 
-  if ("user"=="admin") {
+  useState(()=>{
+    console.log(userName);
+  },[])
+
+  if (role=="admin") {
     return (
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-0 rounded">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <Link to="/" className="flex items-center">
             <img src={Logo} className="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
             <span className="self-center text-xl font-semibold whitespace-nowrap">
-              Dummy App
+              {userName}
             </span>
           </Link>
           <button

@@ -10,7 +10,7 @@ function UserAccountPage() {
   const accountId = useParams()["accountId"];
   const [accountDetails, setaccountDetails] = useState(null);
   const [accountTransection, setAccountTransection] = useState(null);
-  const [totalTransections, setTotalTransections] = useState(0);
+  const [transections, setTransections] = useState(0);
   const [transectionPage, setTransectionPage] = useState(1);
   const [transectionPageLimit, setTransectionPageLimit] = useState(5);
   let transectionPageOffset = 0
@@ -23,6 +23,7 @@ function UserAccountPage() {
   useEffect(()=>{
     if(accountTransection){
       transectionPageOffset = transectionPage*transectionPageLimit-transectionPageLimit
+      transections
       getAccountTransection();
     }
   },[transectionPage])
@@ -45,7 +46,7 @@ function UserAccountPage() {
       .get(url)
       .then((res) => {
         setAccountTransection(res.data);
-        setTotalTransections(res.headers["x-total-count"]);
+        setTransections(res.headers["x-total-count"]);
       })
       .catch((err) => {
         console.error(err);
@@ -83,7 +84,7 @@ function UserAccountPage() {
           )}
           <div className="flex items-center justify-center">
             <Pagination
-              total={totalTransections}
+              total={transections}
               limit={transectionPageLimit}
               currentPage={transectionPage}
               setCurrentPage={setTransectionPage}

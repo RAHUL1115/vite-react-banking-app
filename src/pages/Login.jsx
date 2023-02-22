@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'universal-cookie';
+import cookies from '../utils/cookies';
 
 
 function Login() {
-  const cookies = new Cookies();
   const navigate = useNavigate();
   const [username, setUsername] = useState("shailesh@admin.com");
   const [password, setPassword] = useState("admin");
@@ -31,8 +30,8 @@ function Login() {
         let roleName = res.data.roleName.toLowerCase();
         let userName = res.data.username;
         
-        // let authorization =  res.data.authorization;
-        // cookies.set('authorization', authorization, { path: '/' });
+        cookies.set('role', roleName, { path: '/' });
+        cookies.set('userName', userName, { path: '/' });
 
         if (roleName === "admin") {
           navigate(`/admin/users`);
