@@ -1,10 +1,12 @@
 import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons8-user-100.png";
 
 function UserCard({ id, isActive, firstName, lastName, email, balance, reRender }) {
   const [isUserActive, setisUserActive] = useState(isActive);
+  const { enqueueSnackbar } = useSnackbar();
 
   function toggleUserActive(state){
     let url = `http://localhost:5000/api/v1/bank-app/auth/${id}`;
@@ -13,10 +15,12 @@ function UserCard({ id, isActive, firstName, lastName, email, balance, reRender 
         isActive : state
       })
       .then((res) => {
+        enqueueSnackbar(`user ${state ? 'enabled' : 'disabled'}`, { variant: state ? 'info' : 'warning' });
         setisUserActive(state);
         reRender();
       })
       .catch((err) => {
+        enqueueSnackbar(`${state ? 'enable' : 'disable'} user error`, { variant: "error" });
         reRender();
         console.error(err);
       });

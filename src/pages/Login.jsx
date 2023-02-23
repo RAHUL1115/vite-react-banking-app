@@ -7,8 +7,8 @@ import { useSnackbar } from "notistack";
 function Login() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("shailesh@sbi.com");
-  const [password, setPassword] = useState("sbi");
+  const [username, setUsername] = useState("shailesh@admin.com");
+  const [password, setPassword] = useState("admin");
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -41,9 +41,6 @@ function Login() {
         cookies.set("userName", userName, { path: "/" });
 
         enqueueSnackbar("Login Sucess", { variant: "success" });
-        // setTimeout(() => {
-        //   closeSnackbar();
-        // },2000)
 
         if (roleName === "admin") {
           navigate(`/admin/users`);

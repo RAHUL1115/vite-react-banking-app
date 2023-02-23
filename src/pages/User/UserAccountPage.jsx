@@ -60,10 +60,6 @@ function UserAccountPage() {
       });
   }
 
-  function reRender() {
-    setTemp(!temp);
-  }
-
   return (
     <Layout1>
       <hr />
@@ -95,7 +91,9 @@ function UserAccountPage() {
                 <TransectionCard
                   accountId={accountDetails.id}
                   bankId={accountDetails.bankID}
-                  reRender={reRender}
+                  reRender={()=>{
+                    setTemp(!temp)
+                  }}
                 ></TransectionCard>
               )}
               <TransectionTable data={transections}></TransectionTable>

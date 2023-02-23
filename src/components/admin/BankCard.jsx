@@ -1,32 +1,21 @@
 import axios from "axios";
 import UpdateBank from '../admin/Bank/UpdateBank'
 import UserIcon from "../../assets/icons8-user-100.png";
+import { useSnackbar } from "notistack";
 
 function BankCard({ fullName, abbreviation, id, reRender }) {
-  function updateBank() {
-    let url = `http://localhost:5000/api/v1/bank-app/banks/${id}`;
-    axios
-      .put(url,{
-        fullName: fullName,
-        abbreviation: abbreviation,
-      })
-      .then((res) => {
-        reRender()
-      })
-      .catch((err) => {
-        console.error(err);
-        reRender();
-      });
-  }
-  
+  const { enqueueSnackbar } = useSnackbar();
+
   function deleteBank() {
     let url = `http://localhost:5000/api/v1/bank-app/banks/${id}`;
     axios
       .delete(url)
       .then((res) => {
+        enqueueSnackbar("Bank Deleted", { variant: "warning" });
         reRender()
       })
       .catch((err) => {
+        enqueueSnackbar("Bank Delete Error", { variant: "error" });
         console.error(err);
         reRender();
       });

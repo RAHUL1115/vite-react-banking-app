@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Model from "../Model";
 import AddIcon from '@mui/icons-material/Add';
+import { useSnackbar } from "notistack";
 
-function AddAccount({ customerId,reRender }) {
+function AddAccount({ customerId, reRender }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [bankList, setBankList] = useState();
   const [accountName, setAccountName] = useState();
@@ -24,6 +26,7 @@ function AddAccount({ customerId,reRender }) {
         setBankList(res.data)
       })
       .catch((err) => {
+        enqueueSnackbar("Error: Could not able to retrive bank list.", { variant: "error" });
         console.log(err);
       });
   }
@@ -38,10 +41,12 @@ function AddAccount({ customerId,reRender }) {
         balance: balance,
       })
       .then((res) => {
-        reRender();
+        enqueueSnackbar("Added", { variant: "success" });
         setOpen(false);
+        reRender();
       })
       .catch((err) => {
+        enqueueSnackbar("Account Add Error", { variant: "error" });
         console.log(err);
         reRender();
         setOpen(false);

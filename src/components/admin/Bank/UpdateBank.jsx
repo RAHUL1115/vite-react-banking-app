@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import Model from "../../Model";
 
 function UpdateBank({id,fullNameProp,abbreviationProp,reRender}) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [abbreviation, setAbbreviation] = useState(abbreviationProp);
   const [fullName, setFullName] = useState(fullNameProp);
@@ -15,11 +17,12 @@ function UpdateBank({id,fullNameProp,abbreviationProp,reRender}) {
         abbreviation: abbreviation,
       })
       .then((res) => {
+        enqueueSnackbar("Bank Updated", { variant: "info" });
         setOpen(false)
         reRender();
       })
       .catch((err) => {
-        console.log(err);
+        enqueueSnackbar("Update Bank Error", { variant: "error" });
         reRender();
         setOpen(false)
       });

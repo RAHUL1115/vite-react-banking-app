@@ -2,14 +2,16 @@ import axios from "axios";
 import { useState } from "react";
 import Model from "../../Model";
 import AddIcon from '@mui/icons-material/Add';
+import { useSnackbar } from "notistack";
 
 
 function AddBank({reRender}) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [abbreviation, setAbbreviation] = useState();
   const [fullName, setFullName] = useState();
 
-  function deposit() {
+  function addBank() {
     let url = `http://localhost:5000/api/v1/bank-app/banks`;
     axios
       .post(url, {
@@ -17,10 +19,12 @@ function AddBank({reRender}) {
         abbreviation: abbreviation,
       })
       .then((res) => {
+        enqueueSnackbar("Bank Added", { variant: "success" });
         setOpen(false)
         reRender();
       })
       .catch((err) => {
+        enqueueSnackbar("Bank Add Wrrro", { variant: "error" });
         console.log(err);
         reRender();
         setOpen(false)
@@ -65,7 +69,7 @@ function AddBank({reRender}) {
           <div className="flex mx-auto gap-x-2">
             <button
               type="button"
-              onClick={deposit}
+              onClick={addBank}
               className=" text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Add

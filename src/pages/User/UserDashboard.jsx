@@ -11,14 +11,14 @@ import { useSnackbar } from "notistack";
 
 function UserDashboard() {
   let isAdmin = cookies.get("role") == "admin";
-  const { enqueueSnackbar } = useSnackbar();  
+  const { enqueueSnackbar } = useSnackbar();
   let userId = isAdmin ? useParams()["userId"] : cookies.get("id");
   const [customer, setCusomers] = useState(null);
   const [temp, setTemp] = useState(true);
 
   useEffect(() => {
     getCustomerDetails();
-  }, []);
+  }, [temp]);
 
   function getCustomerDetails() {
     let url = `http://localhost:5000/api/v1/bank-app/customers/${userId}`;
@@ -26,12 +26,13 @@ function UserDashboard() {
       .get(url)
       .then((res) => {
         if (res.data.length == 0) {
-          enqueueSnackbar("No Data Found", { variant: "alert" });
+          enqueueSnackbar("No Data Found", { variant: "error" });
         } else {
           setCusomers(res.data[0]);
         }
       })
       .catch((err) => {
+        enqueueSnackbar("User Fetch Error", { variant: "error" });
         console.error(err);
       });
   }
@@ -60,24 +61,27 @@ function UserDashboard() {
         <h2 className="uppercase font-bold text-2xl text-center">
           user accounts
         </h2>
-        <div className="grid grid-cols-4 gap-5">
-          <AddAccount
-            customerId={userId}
-            reRender={() => {
-              setTemp(!temp);
-            }}
-          ></AddAccount>
+        <div className="space-y-5">
           {customer ? (
-            customer.accounts.map((account) => (
-              <UserAccountCard
-                key={account.id}
-                id={account.id}
-                accountName={account.accountName}
-                bankID={customer.bankID}
-                customerID={customer.customerID}
-                balance={customer.balance}
-              />
-            ))
+            <div className="grid grid-cols-4 gap-5">
+              <AddAccount
+                customerId={userId}
+                reRender={() => {
+                  setTemp(!temp);
+                  console.log("hello");
+                }}
+              ></AddAccount>
+              {customer.accounts.map((account) => (
+                <UserAccountCard
+                  key={account.id}
+                  id={account.id}
+                  accountName={account.accountName}
+                  bankID={customer.bankID}
+                  customerID={customer.customerID}
+                  balance={customer.balance}
+                />
+              ))}
+            </div>
           ) : (
             <div className="flex justify-center items-center">
               <Loader></Loader>
