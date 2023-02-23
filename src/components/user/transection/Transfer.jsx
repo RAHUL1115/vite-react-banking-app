@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import Model from "../../Model";
 
 function Transfer({ accountId, bankId, reRender }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [ammount, setAmmount] = useState();
   const [toAccount, setToAccount] = useState();
@@ -16,10 +18,12 @@ function Transfer({ accountId, bankId, reRender }) {
         toAccountID: toAccount,
       })
       .then((res) => {
+        enqueueSnackbar("Transfered", { variant: "success" });
         setOpen(false);
         reRender();
       })
       .catch((err) => {
+        enqueueSnackbar("Transfer error", { variant: "error" });
         setOpen(false);
         console.log(err);
       });

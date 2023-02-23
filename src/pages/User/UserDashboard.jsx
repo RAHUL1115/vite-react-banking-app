@@ -5,28 +5,29 @@ import Loader from "../../components/Loader";
 import UserDetailsCard from "../../components/user/UserDetailsCard";
 import UserAccountCard from "../../components/user/UserAccountCard";
 import { useNavigate, useParams } from "react-router-dom";
-import cookies from '../../utils/cookies'
+import cookies from "../../utils/cookies";
+import AddAccount from "../../components/user/AddAccount";
+import { useSnackbar } from "notistack";
 
 function UserDashboard() {
-  let isAdmin = cookies.get('role') == "admin"
-  let navigate = useNavigate()
-  let accountId = isAdmin ? useParams()['userId'] : cookies.get('id');
+  let isAdmin = cookies.get("role") == "admin";
+  const { enqueueSnackbar } = useSnackbar();  
+  let userId = isAdmin ? useParams()["userId"] : cookies.get("id");
   const [customer, setCusomers] = useState(null);
-
+  const [temp, setTemp] = useState(true);
 
   useEffect(() => {
     getCustomerDetails();
   }, []);
 
   function getCustomerDetails() {
-    let url = `http://localhost:5000/api/v1/bank-app/customers/${accountId}`;
+    let url = `http://localhost:5000/api/v1/bank-app/customers/${userId}`;
     axios
       .get(url)
       .then((res) => {
-        if(res.data.length == 0){
-          alert('No data found');
-          isAdmin && navigate(-1)
-        }else{
+        if (res.data.length == 0) {
+          enqueueSnackbar("No Data Found", { variant: "alert" });
+        } else {
           setCusomers(res.data[0]);
         }
       })
@@ -59,7 +60,13 @@ function UserDashboard() {
         <h2 className="uppercase font-bold text-2xl text-center">
           user accounts
         </h2>
-        <div className="space-y-5">
+        <div className="grid grid-cols-4 gap-5">
+          <AddAccount
+            customerId={userId}
+            reRender={() => {
+              setTemp(!temp);
+            }}
+          ></AddAccount>
           {customer ? (
             customer.accounts.map((account) => (
               <UserAccountCard

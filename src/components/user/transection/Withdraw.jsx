@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import Model from "../../Model";
 
 function Withdraw({ accountId, bankId, reRender }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [ammount, setAmmount] = useState();
 
@@ -14,10 +16,12 @@ function Withdraw({ accountId, bankId, reRender }) {
         bankID: bankId,
       })
       .then((res) => {
+        enqueueSnackbar("Withdrawn", { variant: "success" });
         setOpen(false)
         reRender();
       })
       .catch((err) => {
+        enqueueSnackbar("Withdraw error", { variant: "error" });
         setOpen(false)
         console.log(err);
       });

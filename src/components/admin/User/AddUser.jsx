@@ -3,18 +3,23 @@ import { useState } from "react";
 import Model from "../../Model";
 import AddIcon from '@mui/icons-material/Add';
 
-
-function AddBank({reRender}) {
+function AddUser({reRender}) {
   const [open, setOpen] = useState(false);
-  const [abbreviation, setAbbreviation] = useState();
-  const [fullName, setFullName] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [balance, setBalance] = useState();
 
   function deposit() {
-    let url = `http://localhost:5000/api/v1/bank-app/banks`;
+    let url = `http://localhost:5000/api/v1/bank-app/customers`;
     axios
       .post(url, {
-        fullName: fullName,
-        abbreviation: abbreviation,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        balance: balance,
       })
       .then((res) => {
         setOpen(false)
@@ -42,23 +47,56 @@ function AddBank({reRender}) {
         <div className="flex flex-col gap-y-4">
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 ">
-              Full Name
+              First Name
             </label>
             <input
               type="text"
-              value={fullName}
-              onChange={(e)=>{setFullName(e.target.value)}}
+              value={firstName}
+              onChange={(e)=>{setFirstName(e.target.value)}}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5      "
             />
           </div>
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 ">
-              Abbreviation
+              Last Name
             </label>
             <input
               type="text"
-              value={abbreviation}
-              onChange={(e)=>{setAbbreviation(e.target.value)}}
+              value={lastName}
+              onChange={(e)=>{setLastName(e.target.value)}}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5      "
+            />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Email
+            </label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e)=>{setEmail(e.target.value)}}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5      "
+            />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Password
+            </label>
+            <input
+              type="text"
+              value={password}
+              onChange={(e)=>{setPassword(e.target.value)}}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5      "
+            />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Initial Balance
+            </label>
+            <input
+              type="text"
+              value={balance}
+              onChange={(e)=>{setBalance(e.target.value)}}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5      "
             />
           </div>
@@ -84,4 +122,4 @@ function AddBank({reRender}) {
   );
 }
 
-export default AddBank;
+export default AddUser;

@@ -1,8 +1,11 @@
 import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import Model from "../../Model";
 
 function Deposit({accountId, bankId, reRender}) {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [open, setOpen] = useState(false);
   const [ammount, setAmmount] = useState();
 
@@ -14,12 +17,12 @@ function Deposit({accountId, bankId, reRender}) {
         bankID: bankId,
       })
       .then((res) => {
-        console.log(res);
+        enqueueSnackbar("Deposited", { variant: "success" });
         setOpen(false)
         reRender();
       })
       .catch((err) => {
-        console.log(err);
+        enqueueSnackbar("Deposit error", { variant: "success" });
         setOpen(false)
       });
   }

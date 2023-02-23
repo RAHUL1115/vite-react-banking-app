@@ -9,6 +9,8 @@ import AdminUsersDashboard from "./pages/Admin/AdminUsersDashboard";
 import AdminBanksDashboard from "./pages/Admin/AdminBanksDashboard";
 import UserAccountPage from "./pages/User/UserAccountPage";
 
+import { SnackbarProvider } from 'notistack';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,5 +43,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
+    <RouterProvider router={router} />
+  </SnackbarProvider>
 );

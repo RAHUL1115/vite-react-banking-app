@@ -98,7 +98,7 @@ function UserAccountPage() {
                   reRender={reRender}
                 ></TransectionCard>
               )}
-              {/* <TransectionTable data={transections}></TransectionTable> */}
+              <TransectionTable data={transections}></TransectionTable>
             </>
           ) : (
             <div className="flex justify-center items-center">

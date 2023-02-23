@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import cookies from '../utils/cookies';
-
+import cookies from "../utils/cookies";
+import { useSnackbar } from "notistack";
 
 function Login() {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("shailesh@admin.com");
-  const [password, setPassword] = useState("admin");
+  const [username, setUsername] = useState("shailesh@sbi.com");
+  const [password, setPassword] = useState("sbi");
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -20,20 +21,29 @@ function Login() {
     let url = `http://localhost:5000/api/v1/bank-app/auth/login`;
 
     axios
-      .post(url, {
-        username: username,
-        password: password,
-      },{
-        withCredentials: true,
-      })
+      .post(
+        url,
+        {
+          username: username,
+          password: password,
+        },
+        {
+          // withCredentials: true,
+        }
+      )
       .then((res) => {
         let id = res.data.id;
         let roleName = res.data.roleName.toLowerCase();
         let userName = res.data.username;
-        
-        cookies.set('id', id, { path: '/' });
-        cookies.set('role', roleName, { path: '/' });
-        cookies.set('userName', userName, { path: '/' });
+
+        cookies.set("id", id, { path: "/" });
+        cookies.set("role", roleName, { path: "/" });
+        cookies.set("userName", userName, { path: "/" });
+
+        enqueueSnackbar("Login Sucess", { variant: "success" });
+        // setTimeout(() => {
+        //   closeSnackbar();
+        // },2000)
 
         if (roleName === "admin") {
           navigate(`/admin/users`);

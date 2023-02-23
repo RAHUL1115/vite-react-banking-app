@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import cookies from '../utils/cookies'
 
 function Navbar() {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const userName = cookies.get('userName')
   const role = cookies.get('role')
@@ -13,6 +14,7 @@ function Navbar() {
     cookies.remove('userName');
     cookies.remove('role');
     navigate('/');
+    enqueueSnackbar("Logged Out", { variant: "info" });
   }
 
   if (role=="admin") {

@@ -43,15 +43,14 @@ function AdminUsersDashboard() {
       <div className="container mx-auto p-4 space-y-5">
         <h2 className="uppercase font-bold text-2xl text-center">Bank List</h2>
         <div className="space-y-5">
-          <div className="flex justify-center">
-            <AddBank
+          
+          {banks ? (
+            <div className="grid grid-cols-4 gap-5">
+              <AddBank
               reRender={() => {
                 setTemp(!temp);
               }}
             ></AddBank>
-          </div>
-          {banks ? (
-            <div className="grid grid-cols-4 gap-5">
               {banks.map((bank) => (
                 <BankCard
                   key={bank.id}
